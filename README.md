@@ -1,6 +1,6 @@
-# hello-vue
+# TypeScript Vue Todo MVC Demo
 
-> A Vue.js project
+> A TypeScript Vue.js Demo based on Vue Todo MVC
 
 ## Build Setup
 
