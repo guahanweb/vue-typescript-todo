@@ -132,18 +132,18 @@ export default {
   }
 
   computed: {
-    filteredTodos: function () {
+    filteredTodos: function (): Array<Todo.TodoItem> {
       return filters[this.visibility](this.todos);
     },
-    remaining: function () {
+    remaining: function (): number {
       return filters.active(this.todos).length;
     },
     allDone: {
-      get: function () {
+      get: function (): boolean {
         return this.remaining === 0;
       },
 
-      set: function (value: boolean) {
+      set: function (value: boolean): void {
         this.todos.forEach(function (todo) {
           todo.completed = value;
         });
@@ -152,7 +152,7 @@ export default {
   }
 
   filters: {
-    pluralize: function (n: number) {
+    pluralize: function (n: number): string {
       return n === 1 ? 'item' : 'items';
     }
   }
@@ -160,7 +160,7 @@ export default {
   // custom directive to wait for the DOM to be updated
   // before focusing on the input field.
   directives: {
-    'todo-focus': function (el, binding) {
+    'todo-focus': function (el: object, binding: object): void {
       if (binding.value) {
         el.focus();
       }
