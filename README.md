@@ -1,6 +1,6 @@
 # TypeScript Vue Todo MVC Demo
 
-> A TypeScript Vue.js Demo based on Vue Todo MVC
+> A TypeScript Vue.js Demo based on Vue's [Todo MVC](http://todomvc.com/examples/vue/)
 
 ## Build Setup
 
