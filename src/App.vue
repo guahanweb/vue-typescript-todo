@@ -11,22 +11,13 @@
     <section class="main" v-show="todos.length" v-cloak>
       <input class="toggle-all" type="checkbox" v-model="allDone">
       <ul class="todo-list">
-        <li v-for="todo in filteredTodos"
+        <todo-item v-for="todo in filteredTodos"
           class="todo"
-          :key="todo.id"
-          :class="{ completed: todo.completed, editing: todo == editedTodo }">
-          <div class="view">
-            <input class="toggle" type="checkbox" v-model="todo.completed">
-            <label @dblclick="editTodo(todo)">{{ todo.title }}</label>
-            <button class="destroy" @click="removeTodo(todo)"></button>
-          </div>
-          <input class="edit" type="text"
-            v-model="todo.title"
-            v-todo-focus="todo == editedTodo"
-            @blur="doneEdit(todo)"
-            @keyup.enter="doneEdit(todo)"
-            @keyup.esc="cancelEdit(todo)">
-        </li>
+          v-bind:key="todo.id"
+          v-bind:item="todo"
+          v-on:remove="removeTodo(todo)"
+          :class="{completed: todo.completed, editing: todo == editedTodo }">
+        </todo-item>
       </ul>
     </section>
     <footer class="footer" v-show="todos.length" v-cloak>
@@ -100,30 +91,8 @@ export default {
       this.newTodo = '';
     },
 
-    removeTodo: function (todo: any): void {
+    removeTodo: function (todo: Todo.TodoItem): void {
       this.todos.splice(this.todos.indexOf(todo), 1);
-    },
-
-    editTodo: function (todo: any): void {
-      this.beforeEditCache = todo.title;
-      this.editedTodo = todo;
-    },
-
-    doneEdit: function (todo: any): void {
-      if (!this.editedTodo) {
-        return;
-      }
-
-      this.editedTodo = null;
-      todo.title = todo.title.trim();
-      if (!todo.title) {
-        this.removeTodo(todo);
-      }
-    },
-
-    cancelEdit: function (todo: any): void {
-      this.editedTodo = null;
-      todo.title = this.beforeEditCache;
     },
 
     removeCompleted: function (): void {
@@ -154,16 +123,6 @@ export default {
   filters: {
     pluralize: function (n: number): string {
       return n === 1 ? 'item' : 'items';
-    }
-  }
-
-  // custom directive to wait for the DOM to be updated
-  // before focusing on the input field.
-  directives: {
-    'todo-focus': function (el: object, binding: object): void {
-      if (binding.value) {
-        el.focus();
-      }
     }
   }
 }
